@@ -8,7 +8,6 @@ import {
   Patch,
   Post,
   Query,
-  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
@@ -17,7 +16,7 @@ import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+  @Get('')
   findAll(@Query('role') role?: 'admin' | 'user' | 'customer') {
     return this.usersService.findAll(role);
   }
