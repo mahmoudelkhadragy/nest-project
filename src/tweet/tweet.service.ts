@@ -20,7 +20,7 @@ export class TweetService {
     const response = tweets.map((tweet) => ({
       text: tweet.text,
       data: tweet.data,
-      name: user.name,
+      name: `${user.firstName} ${user.lastName}`,
     }));
     return response;
   }

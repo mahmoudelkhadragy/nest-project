@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
@@ -13,29 +14,29 @@ export class UsersService {
     @Inject(forwardRef(() => AuthService)) private authService: AuthService,
   ) {}
 
-  private readonly users = [
+  private readonly users: User[] = [
     {
       id: 1,
-      name: 'Alice',
+      firstName: 'Alice',
+      lastName: 'Smith',
       email: 'alice@mail.com',
-      role: 'admin',
-      isMarried: true,
+      gender: 'female',
       password: 'password123',
     },
     {
       id: 2,
-      name: 'Bob',
+      firstName: 'Bob',
+      lastName: 'Johnson',
       email: 'bob@mail.com',
-      role: 'user',
-      isMarried: false,
+      gender: 'male',
       password: 'password456',
     },
     {
       id: 3,
-      name: 'Charlie',
+      firstName: 'Charlie',
+      lastName: 'Brown',
       email: 'charlie@mail.com',
-      role: 'customer',
-      isMarried: true,
+      gender: 'male',
       password: 'password789',
     },
   ];
@@ -44,10 +45,10 @@ export class UsersService {
     return this.users;
   }
 
-  findAll(role?: 'admin' | 'user' | 'customer') {
+  findAll(gender?: string) {
     let users = this.users;
-    if (role) {
-      users = this.users.filter((user) => user.role === role);
+    if (gender) {
+      users = this.users.filter((user) => user.gender === gender);
     }
     return this.authService.isAuthenticated
       ? users
@@ -63,7 +64,7 @@ export class UsersService {
   }
 
   create(user: CreateUserDto) {
-    const newUser = { id: this.users.length + 1, ...user };
+    const newUser: User = { id: this.users.length + 1, ...user };
     this.users.push(newUser);
     return newUser;
   }

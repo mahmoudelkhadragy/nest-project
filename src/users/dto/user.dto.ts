@@ -1,26 +1,24 @@
 import { PartialType } from '@nestjs/mapped-types';
-import {
-  IsBoolean,
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
-  @IsString()
+  @IsString({ message: 'First name must be a string value' })
   @IsNotEmpty()
-  name: string;
+  @MinLength(3, { message: 'First name must be at least 3 characters long' })
+  firstName: string;
+
+  @IsString({ message: 'Last name must be a string value' })
+  @IsNotEmpty()
+  @MinLength(3, { message: 'Last name must be at least 3 characters long' })
+  lastName: string;
 
   @IsString()
   @IsEmail()
   email: string;
 
-  @IsEnum(['admin', 'user', 'customer'], { message: 'Valid role is required' })
-  role: 'admin' | 'user' | 'customer';
-
-  @IsBoolean()
-  isMarried: boolean;
+  @IsString()
+  @IsNotEmpty()
+  gender: string;
 
   @IsString()
   @IsNotEmpty()

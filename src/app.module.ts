@@ -4,8 +4,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TweetModule } from './tweet/tweet.module';
 import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from 'node_modules/@nestjs/typeorm/dist/typeorm.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from './users/user.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        entities: [],
+        entities: [User],
         synchronize: true,
         host: configService.get('DATABASE_HOST'),
         port: configService.get<number>('DATABASE_PORT'),
